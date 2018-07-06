@@ -35,7 +35,7 @@ function close(io:CharacterChannel characterChannel) {
 }
 
 
-//read the json that hard are coded.
+//read the json that are hard coded.
 
 function read(string path) returns json {
     io:ByteChannel byteChannel = io:openFile(path, io:READ);
@@ -84,20 +84,23 @@ service<http:Service> orderMgt bind listener {
 
         json jsonArr = payload.orderArray;
 
-        payload = jsonArr;
+        if(orderId=="all"){
 
-        //int i=0;
-        //
-        //while(i < lengthof jsonArr) {
-        //    if( jsonArr[i].ID.toString().equalsIgnoreCase(orderId)){
-        //
-        //        payload = jsonArr[i];
-        //    }
-        //
-        //    i++;
-        //
-        //
-        //}
+            payload = jsonArr;
+
+        }
+        int i=0;
+
+        while(i < lengthof jsonArr) {
+            if( jsonArr[i].ID.toString().equalsIgnoreCase(orderId)){
+
+                payload = jsonArr[i];
+            }
+
+            i++;
+
+
+        }
 
         //io:println(payload.orderArray[0].ID.toString().equalsIgnoreCase(orderId));
 
@@ -148,7 +151,7 @@ service<http:Service> orderMgt bind listener {
         //        orderId);
 
         response.setHeader("Location", "http://localhost:9090/ordermgt/order/" +
-                "all");
+                orderId);
 
         // Send response to the client.
 
