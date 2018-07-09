@@ -37,12 +37,12 @@ function close(io:CharacterChannel characterChannel) {
 
 //read the json that are hard coded.
 
-function read(string path) returns json {
+ function read(string path) returns json {
     io:ByteChannel byteChannel = io:openFile(path, io:READ);
     io:CharacterChannel ch = new io:CharacterChannel(byteChannel, "UTF8");
     match ch.readJson() {
         json result => {
-            io:println(result);
+
             close(ch);
             return result;
         }
@@ -52,6 +52,56 @@ function read(string path) returns json {
         }
     }
 }
+
+
+
+
+ function modify(string path, string orderId, json updatedOrder) {
+
+    json s = read(path);
+io:println(s);
+    json jsonArr  = s.orderArray;
+
+    int i=0;
+    json existingOrder;
+
+    while(i < lengthof jsonArr) {
+        if(jsonArr[i].ID.toString().equalsIgnoreCase(orderId)){
+            existingOrder=jsonArr[i];
+            break;
+        }
+        i++;
+    }
+
+    map m = check <map>updatedOrder;
+
+    string[] arr = m.keys();
+
+    foreach str in arr {
+        existingOrder[str] = updatedOrder[str];
+    }
+    s.orderArray[i] = existingOrder;
+
+
+
+
+     io:ByteChannel byteChannel = io:openFile(path, io:WRITE);
+
+     io:CharacterChannel ch = new io:CharacterChannel(byteChannel, "UTF8");
+
+     match ch.writeJson(s) {
+         error err => {
+             close(ch);
+             throw err;
+         }
+         () => {
+             close(ch);
+             io:println("Content written successfully");
+
+         }
+         }
+
+ }
 
 
 
@@ -102,7 +152,7 @@ service<http:Service> orderMgt bind listener {
 
         }
 
-        //io:println(payload.orderArray[0].ID.toString().equalsIgnoreCase(orderId));
+
 
         http:Response response;
 
@@ -167,34 +217,27 @@ service<http:Service> orderMgt bind listener {
         path: "/order/{orderId}"
     }
 
+
+
+
+
+
     updateOrder(endpoint client, http:Request req, string orderId) {
 
-        json updatedOrder = check req.getJsonPayload();
+        // Find the requested order from the map and retrieve it in JSON format.
 
-        // Find the order that needs to be updated and retrieve it in JSON format.
 
-        json existingOrder = ordersMap[orderId];
+        json updatedOrder = check req.getJsonPayload(); // what we have to update
 
-        // Updating existing order with the attributes of the updated order.
 
-        if (existingOrder != null) {
-            existingOrder.Order.Name = updatedOrder.Order.Name;
-            existingOrder.Order.Description = updatedOrder.Order.Description;
-            ordersMap[orderId] = existingOrder;
 
-        } else {
-            existingOrder = "Order : " + orderId + " cannot be found.";
-        }
 
-        http:Response response;
 
-        // Set the JSON payload to the outgoing response message to the client.
+                modify(filePath, orderId,updatedOrder);
 
-        response.setJsonPayload(existingOrder);
 
-        // Send response to the client.
 
-        _ = client->respond(response);
+
     }
 
     // Resource that handles the HTTP DELETE requests, which are directed to the path

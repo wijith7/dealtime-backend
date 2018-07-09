@@ -1,1 +1,1 @@
-{"order":[{"ID":"100501","Name":"wijith","Description":"Sample order.","Price":16.99},{"ID":"100502","Name":"wijith","Description":"Sample order.","Price":16.99}]}
+{"Store":{"id":"AST","name":"Anne","address":{"street":"Main","city":"94"},"codes":["4","8"]}}
