@@ -14,14 +14,47 @@
  //under the License.
 
 
-import ballerina/http;
-import ballerina/io;
-import ballerina/log;
+ import ballerina/http;
+ import ballerina/io;
+ import ballerina/log;
+ import ballerina/jms;
 
 
-string filePath = "./files/sample.json";    //file path that order items are hard coded.
+ //file path that order items are hard coded.
+ string filePath = "./files/sample.json";
 
-map<json> ordersMap;                        // Order management is done using an in memory map.
+ // Order management is done using an in memory map.
+ map<json> ordersMap = initialGet();
+
+ // By initialGet() function we initialy load json into ordersMap.
+ //we use this to load sample.json only one time
+
+ function initialGet() returns map<json>{
+
+     map<json> initialOrdersMap;
+
+     json? payload = read(filePath);
+
+     json[] jsonArr = check <json[]>payload.orderArray;
+
+     map<json> jmap;
+
+     //put json objects in to map
+
+     foreach id, jOrder in jsonArr {
+
+         //converted in to string
+
+         string a = jOrder.ID.toString();
+
+         initialOrdersMap[a] = jOrder;
+     }
+
+        // io:println(initialOrdersMap);
+
+     return initialOrdersMap;
+
+ }
 
 
 //close the character channel when done
@@ -55,14 +88,19 @@ function close(io:CharacterChannel characterChannel) {
 
 
 
-
+// modify the orders
  function modify(string path, string orderId, json updatedOrder) {
 
-    json s = read(path);
-io:println(s);
-    json jsonArr  = s.orderArray;
+    json existing_items = read(path);
+
+
+    json jsonArr  = existing_items.orderArray;
+
+    //io:println("started: ", existing_items);
+    //io:println(existing_items);
 
     int i=0;
+
     json existingOrder;
 
     while(i < lengthof jsonArr) {
@@ -78,18 +116,21 @@ io:println(s);
     string[] arr = m.keys();
 
     foreach str in arr {
+
         existingOrder[str] = updatedOrder[str];
+
     }
-    s.orderArray[i] = existingOrder;
+    existing_items.orderArray[i] = existingOrder;
 
 
 
 
-     io:ByteChannel byteChannel = io:openFile(path, io:WRITE);
+     io:ByteChannel byteChannel = io:openFile(path, io:APPEND);
 
      io:CharacterChannel ch = new io:CharacterChannel(byteChannel, "UTF8");
+    io:println("end: ", existing_items);
 
-     match ch.writeJson(s) {
+     match ch.writeJson(existing_items) {
          error err => {
              close(ch);
              throw err;
@@ -130,9 +171,22 @@ service<http:Service> orderMgt bind listener {
 
         // Find the requested order from the map and retrieve it in JSON format.
 
-        json? payload = read(filePath);
+        //json? payload = read(filePath);
 
-        json jsonArr = payload.orderArray;
+
+        json payload;
+
+        //json jsonArr = check <json[]>payload.orderArray;
+
+        json[] jsonArr;
+
+        foreach i,j in ordersMap  {
+            int a = check <int>i;
+            jsonArr[a-1] = j;
+        }
+
+        io:println(jsonArr);
+
 
         if(orderId=="all"){
 
@@ -141,16 +195,16 @@ service<http:Service> orderMgt bind listener {
         }
         int i=0;
 
-        while(i < lengthof jsonArr) {
-            if( jsonArr[i].ID.toString().equalsIgnoreCase(orderId)){
-
-                payload = jsonArr[i];
-            }
-
-            i++;
-
-
-        }
+        //while(i < lengthof jsonArr) {
+        //    if( jsonArr[i].ID.toString().equalsIgnoreCase(orderId)){
+        //
+        //        payload = jsonArr[i];
+        //    }
+        //
+        //    i++;
+        //
+        //
+        //}
 
 
 
@@ -224,20 +278,33 @@ service<http:Service> orderMgt bind listener {
 
     updateOrder(endpoint client, http:Request req, string orderId) {
 
-        // Find the requested order from the map and retrieve it in JSON format.
+        json updatedOrder = check req.getJsonPayload();
 
+        // Find the order that needs to be updated and retrieve it in JSON format.
 
-        json updatedOrder = check req.getJsonPayload(); // what we have to update
+        json existingOrder = ordersMap[orderId];
 
+        // Updating existing order with the attributes of the updated order.
 
+        if (existingOrder != null) {
 
+            //existingOrder.name = updatedOrder.name;
+            existingOrder.stock = updatedOrder.stock;
 
+            //existingOrder.Order.Description = updatedOrder.Order.Description;
 
-                modify(filePath, orderId,updatedOrder);
+            ordersMap[orderId] = existingOrder;
 
+        } else {
 
+            existingOrder = "Order : " + orderId + " cannot be found.";
+        }
 
-
+        http:Response response;
+        // Set the JSON payload to the outgoing response message to the client.
+        response.setJsonPayload(existingOrder);
+        // Send response to the client.
+        _ = client->respond(response);
     }
 
     // Resource that handles the HTTP DELETE requests, which are directed to the path
