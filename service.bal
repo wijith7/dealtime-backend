@@ -3,9 +3,7 @@
  //Version 2.0 (the "License"); you may not use this file except
  //in compliance with the License.
  //You may obtain a copy of the License at
- //
  //http://www.apache.org/licenses/LICENSE-2.0
- //
  //Unless required by applicable law or agreed to in writing,
  //software distributed under the License is distributed on an
  //"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -21,9 +19,11 @@
 
 
  //file path that order items are hard coded.
+
  string filePath = "./files/sample.json";
 
- // Order management is done using an in memory map.
+ //Order management is done using an in memory map.
+
  map<json> ordersMap = initialGet();
 
  // By initialGet() function we initialy load json into ordersMap.
@@ -33,11 +33,9 @@
 
      map<json> initialOrdersMap;
 
-     json? payload = read(filePath);
+     json? payload = readSampleJSON(filePath);
 
      json[] jsonArr = check <json[]>payload.orderArray;
-
-     map<json> jmap;
 
      //put json objects in to map
 
@@ -48,11 +46,10 @@
          string a = jOrder.ID.toString();
 
          initialOrdersMap[a] = jOrder;
+
      }
 
-        // io:println(initialOrdersMap);
-
-     return initialOrdersMap;
+         return initialOrdersMap;
 
  }
 
@@ -62,6 +59,7 @@
 function close(io:CharacterChannel characterChannel) {
     characterChannel.close() but {
         error e =>
+
         log:printError("Error occurred while closing character stream",
             err = e)
     };
@@ -70,9 +68,11 @@ function close(io:CharacterChannel characterChannel) {
 
 //read the json that are hard coded.
 
- function read(string path) returns json {
+ function readSampleJSON(string path) returns json {
+
     io:ByteChannel byteChannel = io:openFile(path, io:READ);
     io:CharacterChannel ch = new io:CharacterChannel(byteChannel, "UTF8");
+
     match ch.readJson() {
         json result => {
 
@@ -85,65 +85,6 @@ function close(io:CharacterChannel characterChannel) {
         }
     }
 }
-
-
-
-// modify the orders
- function modify(string path, string orderId, json updatedOrder) {
-
-    json existing_items = read(path);
-
-
-    json jsonArr  = existing_items.orderArray;
-
-    //io:println("started: ", existing_items);
-    //io:println(existing_items);
-
-    int i=0;
-
-    json existingOrder;
-
-    while(i < lengthof jsonArr) {
-        if(jsonArr[i].ID.toString().equalsIgnoreCase(orderId)){
-            existingOrder=jsonArr[i];
-            break;
-        }
-        i++;
-    }
-
-    map m = check <map>updatedOrder;
-
-    string[] arr = m.keys();
-
-    foreach str in arr {
-
-        existingOrder[str] = updatedOrder[str];
-
-    }
-    existing_items.orderArray[i] = existingOrder;
-
-
-
-
-     io:ByteChannel byteChannel = io:openFile(path, io:APPEND);
-
-     io:CharacterChannel ch = new io:CharacterChannel(byteChannel, "UTF8");
-    io:println("end: ", existing_items);
-
-     match ch.writeJson(existing_items) {
-         error err => {
-             close(ch);
-             throw err;
-         }
-         () => {
-             close(ch);
-             io:println("Content written successfully");
-
-         }
-         }
-
- }
-
 
 
 endpoint http:Listener listener {
@@ -169,44 +110,30 @@ service<http:Service> orderMgt bind listener {
 
     findOrder(endpoint client, http:Request req, string orderId) {
 
-        // Find the requested order from the map and retrieve it in JSON format.
-
-        //json? payload = read(filePath);
-
+        //paylode :this is the json that we store response
 
         json payload;
 
-        //json jsonArr = check <json[]>payload.orderArray;
+        json[] jsonArray;
 
-        json[] jsonArr;
+        // we can get object one by one
 
-        foreach i,j in ordersMap  {
-            int a = check <int>i;
-            jsonArr[a-1] = j;
+        foreach i, jsonObjectFromOrdersMap in ordersMap  {
+
+            int a = check <int> i;
+
+            jsonArray[a-1] = jsonObjectFromOrdersMap;
         }
 
-        io:println(jsonArr);
+       // all : we rends all items to the front end
 
+        if (orderId == "all"){
 
-        if(orderId=="all"){
+            //send all the items
 
-            payload = jsonArr;
+            payload = jsonArray;
 
         }
-        int i=0;
-
-        //while(i < lengthof jsonArr) {
-        //    if( jsonArr[i].ID.toString().equalsIgnoreCase(orderId)){
-        //
-        //        payload = jsonArr[i];
-        //    }
-        //
-        //    i++;
-        //
-        //
-        //}
-
-
 
         http:Response response;
 
@@ -271,11 +198,6 @@ service<http:Service> orderMgt bind listener {
         path: "/order/{orderId}"
     }
 
-
-
-
-
-
     updateOrder(endpoint client, http:Request req, string orderId) {
 
         json updatedOrder = check req.getJsonPayload();
@@ -288,10 +210,8 @@ service<http:Service> orderMgt bind listener {
 
         if (existingOrder != null) {
 
-            //existingOrder.name = updatedOrder.name;
-            existingOrder.stock = updatedOrder.stock;
 
-            //existingOrder.Order.Description = updatedOrder.Order.Description;
+            existingOrder.stock = updatedOrder.stock;
 
             ordersMap[orderId] = existingOrder;
 
@@ -301,9 +221,13 @@ service<http:Service> orderMgt bind listener {
         }
 
         http:Response response;
+
         // Set the JSON payload to the outgoing response message to the client.
+
         response.setJsonPayload(existingOrder);
+
         // Send response to the client.
+
         _ = client->respond(response);
     }
 
