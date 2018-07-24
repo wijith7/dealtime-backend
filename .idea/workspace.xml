@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bf9503c2-9450-4d0b-9a9c-f30429fa527c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sample.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/sample.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service.bal" beforeDir="false" afterPath="$PROJECT_DIR$/service.bal" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -25,8 +24,8 @@
       <file leaf-file-name="service.bal" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/service.bal">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1886">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="228">
+              <caret line="191" column="12" selection-start-line="191" selection-start-column="12" selection-end-line="191" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -75,7 +74,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="337" />
-    <option name="y" value="236" />
+    <option name="y" value="101" />
     <option name="width" value="1226" />
     <option name="height" value="846" />
   </component>
@@ -235,7 +234,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="337" y="236" width="1226" height="846" extended-state="0" />
+    <frame x="337" y="101" width="1226" height="846" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="bottom" id="TODO" order="9" />
@@ -429,8 +429,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service.bal">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1886">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="228">
+          <caret line="191" column="12" selection-start-line="191" selection-start-column="12" selection-end-line="191" selection-end-column="12" />
         </state>
       </provider>
     </entry>

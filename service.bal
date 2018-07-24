@@ -35,6 +35,7 @@ function initialGet() returns map<json> {
 
     //put json objects in to map
     foreach id, jOrder in jsonArr {
+
         //converted in to string
         string a = jOrder.ID.toString(); //change a
         initialOrdersMap[a] = jOrder;
@@ -47,9 +48,9 @@ function initialGet() returns map<json> {
 function close(io:CharacterChannel characterChannel) {
 
     characterChannel.close() but {
+
         error e =>
-        log:printError("Error occurred while closing character stream",
-            err = e)
+        log:printError("Error occurred while closing character stream", err = e)
 
     };
 }
@@ -61,12 +62,16 @@ function readSampleJSON(string path) returns json {
     io:CharacterChannel ch = new io:CharacterChannel(byteChannel, "UTF8");
 
     match ch.readJson() {
+
         json result => {
+
             close(ch);
             return result;
 
         }
+
         error err => {
+
             close(ch);
             throw err;
 
@@ -85,8 +90,7 @@ endpoint http:Listener listener {
 
 service<http:Service> orderMgt bind listener {
 
-    // Resource that handles the HTTP GET requests that are directed to a specific place
-    // order using path '/orders/<orderID>
+         // Resource that handles the HTTP GET requests that are directed to a specific place
     @http:ResourceConfig {
         methods: ["GET"],
         path: "/order/{orderId}"
@@ -103,6 +107,7 @@ service<http:Service> orderMgt bind listener {
         if (orderId == "all"){
 
             payload = jsonArray;
+
         }
 
         // we can get object one by one
@@ -118,6 +123,7 @@ service<http:Service> orderMgt bind listener {
         if (payload == null) {
 
             payload = "Order : " + orderId + " cannot be found.";
+
         }
 
         // Set the JSON payload in the outgoing response message.
@@ -183,6 +189,7 @@ service<http:Service> orderMgt bind listener {
         } else {
 
             existingOrder = "Order : " + orderId + " cannot be found.";
+
         }
 
         http:Response response;
