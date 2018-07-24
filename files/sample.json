@@ -92,16 +92,16 @@
     "name": "VIVO Phone",
     "description": "vivo x9s",
     "price": 120.99,
-    "img": "https://image.ibb.co/nbs3gy/vivo_x9s_plus.png",
+    "img": "https://image.ibb.co/hGEGio/1042312_xl.jpg",
     "stock": 10,
     "inCart": false},
 
        {
     "ID": 10,
-    "name": "Apple Phone",
-    "description": "S5",
+    "name": "HTC Phone",
+    "description": "HTC Desire 10 Pro 64GB White",
     "price": 184.99,
-    "img": "https://image.ibb.co/bPQTEJ/885023_large.jpg",
+    "img": "https://image.ibb.co/g6RJw8/613731_xl.jpg",
          "stock": 10,
     "inCart": false
 
