@@ -3,7 +3,7 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Ballerina 0.970.1" jdkType="Ballerina SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="BALLERINA_REPOSITORY &lt;Service&gt;" level="project" />
     <orderEntry type="library" name="BALLERINA_REPOSITORY &lt;Service&gt;" level="project" />

@@ -321,3 +321,36 @@ java.net.BindException: Address already in use
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.lang.Thread.run(Thread.java:748)
  
+[2018-08-01 13:59:27,895] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 13:59:27,949] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 13:59:27,954] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 13:59:27,959] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 13:59:59,367] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - invalid version format: =6ÒÁSSÅÕÞ9ÎÆÙ	D ¶{  VÀ$À( =À&À* K JÀ  
+[2018-08-01 13:59:59,372] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 13:59:59,384] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 13:59:59,388] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:00:32,414] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:11:26,022] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:11:26,036] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:11:26,040] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - invalid version format: VÀ$À( =À&À* K JÀ  
+[2018-08-01 15:11:26,044] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:23:58,700] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - invalid version format: W  VÀ$À( =À&À* K JÀ  
+[2018-08-01 15:23:58,710] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:23:58,713] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:23:58,717] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:24:08,507] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:24:08,512] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - invalid version format: Ï-Þ  
+[2018-08-01 15:24:08,521] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:24:08,526] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:24:11,359] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:24:11,365] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:24:11,369] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - invalid version format: ËP/§¿«@À  VÀ$À( =À&À* K JÀ  
+[2018-08-01 15:24:11,374] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - invalid version format: ¥%Ó§  VÀ$À( =À&À* K JÀ  
+[2018-08-01 15:24:14,058] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - invalid version format: @H&ÐÏ)¹ÙÄÉH  VÀ$À( =À&À* K JÀ  
+[2018-08-01 15:24:14,064] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:24:14,068] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:24:14,073] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:25:17,624] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:25:17,629] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:25:17,632] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  
+[2018-08-01 15:25:17,635] WARN  {org.wso2.transport.http.netty.listener.SourceHandler} - text is empty (possibly HTTP/0.9)  

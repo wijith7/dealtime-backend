@@ -127,7 +127,7 @@ service<http:Service> orderMgt bind listener {
         }
 
         // Set the JSON payload in the outgoing response message.
-        response.setJsonPayload(payload);
+        response.setJsonPayload(untaint payload );
         // Send response to the client.
         client->respond(response)but { error e => log:printError("Error sending response", err = e) };
 
@@ -151,7 +151,7 @@ service<http:Service> orderMgt bind listener {
         // Create response message.
         json payload = { status: "Order Created.", orderId: orderId };
         http:Response response;
-        response.setJsonPayload(payload);
+        response.setJsonPayload(untaint payload);
         // Set 201 Created status code in the response message.
         response.statusCode = 201;
         // Set 'Location' header in the response message.
@@ -194,7 +194,7 @@ service<http:Service> orderMgt bind listener {
 
         http:Response response;
         // Set the JSON payload to the outgoing response message to the client.
-        response.setJsonPayload(existingOrder);
+        response.setJsonPayload(untaint existingOrder);
         // Send response to the client.
         client->respond(response) but { error e => log:printError("Error sending response", err = e) };
     }
